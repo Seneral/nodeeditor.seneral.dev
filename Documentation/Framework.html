@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="21600"> <!-- 6 hours -->
+	<meta name="author" content="Seneral">
+	<meta name="keywords" content="Node Editor, OpenSource, Canvas, Unity, Statemachine">
+	<link rel="icon" type="image/ico" href="../img/Icon/FavIcon_Dark.png">
+
+	<script async type="text/javascript" src="../../js/modernizr-min.js"></script>
+
+	
+<title>Framework - Node Editor Framework Documentation</title>
+<meta name="description" content="OpenSource Node Editor Framework - create your own node-based editor!">
+<meta name="keywords" content="Framework, Overview, Structure, Technical">
+
+
+	<link rel="stylesheet" type="text/css" media="screen" href="../../css/style.css">
+
+	<script type="text/javascript">
+		var gaProperty = 'UA-92606737-1';
+		var disableGA = 'ga-disable-' + gaProperty;
+		if (document.cookie.indexOf(disableGA + '=true') > -1)
+			window[disableGA] = true; // Cookie set to disble GA
+		(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;
+			i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();
+			a=s.createElement(o),m=s.getElementsByTagName(o)[0];
+			a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		}) (window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		ga('create', gaProperty, 'auto');
+		ga('set', 'anonymizeIp', true);
+		ga('send', 'pageview');
+	</script>
+</head>
+<body>
+	<div class="bodyStyle">
+		
+<header class="header headerheight">
+	
+		<div class="headerLogo" style="float:left;">
+			<a href="..\..\index.html">
+				<img src="../../img/Icon/FavIcon_tiny.png">
+			</a>
+		</div>
+
+	<div class="container">
+		<div class="headerLogo" style="float:right;">
+			<a href="https://github.com/Seneral/Node_Editor_Framework">
+				<img src="../img/Icon/FavIcon_GH.png">
+			</a>
+		</div>
+
+		<!-- Title on the left side of the header -->
+		<div class="headerLogo">
+			<a href="../index.html">
+				<img src="../img/Icon/FavIcon_Light.png">
+				<span>Node Editor</span>
+			</a>
+		</div>
+
+		<!-- Navigation controls on the right side of the header - main dropdown by default for mobile and navigation bar for desktop -->
+		<div class="navHeader">
+			<nav class="navList">
+				<input id="burgerToggle" class="navToggle" type="checkbox">
+				<label for="burgerToggle" content-toggled="&#735;" class="navButton">&#9776;</label>
+
+				<div class="navContent">
+					<a class="navItem" href="../index.html">Home</a>
+					<div class="navGroup">
+						<a class="navItem">Documentation</a>
+						<div class="navGroupContent">
+							<a class="navItem" href="GettingStarted.html">Getting Started</a>
+							<a class="navItem" href="Extensions.html">Building Extensions</a>
+							<a class="navItem curNav" href="Framework.html">Framework Overview</a>
+						</div>
+					</div>
+					<a class="navItem" href="../Examples.html">Examples</a>
+				</div>
+			
+			</nav>
+		</div>
+	</div>
+</header>
+<!-- Offset content so header doesn't overlap anything -->
+<div class="headerheight"> </div>
+
+
+		
+<div class="banner banner16-5 hisrc">
+    <img class="bannerImg ratio16-7" src="../../img/Banner_NE_LQ.jpg" data-1x="../../img/Banner_NE_MQ.png" data-2x="../../img/Banner_NE_HQ.png">
+    <div class="bannerOverlay">
+        <div class="bannerText">
+            <div class="bannerTextCentered">
+                <br> <br> <big>Node Editor Framework</big> <br> <br> <big>Framework Overview</big> <br> <br>
+            </div>
+        </div>
+    </div>
+    <div class="bannerShadowBottom"></div>
+</div>
+
+
+		<!-- Page Content -->
+		<div class="content">
+
+			
+<div class="sidePanel left navBox sticky">
+    <big>Navigation</big>
+    <br> <br>
+    <ul class="panelLinks">
+        <li><a href="#CanvasEditorStates">Canvas & EditorState</a></li>
+        <li><a href="#DrawCanvas">DrawCanvas Function</a></li>
+        <li><a href="#TODO">TODO Explanations</a></li>
+    </ul>
+</div>
+<div class="sidePanel right linkBox sticky">
+    <big>Links</big>
+    <br> <br>
+    <ul class="panelLinks">
+        <li><a href="https://github.com/Seneral/Node_Editor_Framework">Github</a></li>
+        <li><a href="http://www.seneral.dev/WebGL_NodeEditor/">WebGL Demo</a></li>
+        <li><a href="http://forum.unity3d.com/threads/simple-node-editor.189230/#post-2134738">Forum Thread</a></li>
+    </ul>
+</div>
+
+
+			<div class="container">
+				<div class="mainContent">
+
+					
+
+<h1>Framework Overview</h1>
+<p>
+    <em> (NOTE: This page is WIP) </em>
+    <br>
+    This section aims to bring you a decent overview on how the framework is structured, so you can get to modify it quickly. 
+    This does not necessarily include implementation details – code sections that need extra detailing are commented. 
+    Also, this section is not only for those planning to get into the code, but for everyone to get an overview what he's working with:)
+</p>
+
+<h2 class="section" id="CanvasEditorStates">
+    <code> NodeCanvas </code> and <code> NodeEditorState </code>
+</h2> 
+<p>
+    Those two components essentially make up the save file you can load up into the Editor. 
+    Basically, the canvas stores all the nodes and any additional information directly related to the Canvas. 
+    In contrary, the <code> EditorState </code> holds all information on the state, or in other words, on how the Canvas is presented. 
+    This includes zoom and pan values, selected Nodes, the canvasRect, etc. Not all of these values are actually saved with the asset, though. 
+    That structure allows for multiple 'views' on the same Canvas and editing it simultaneously. 
+</p>
+
+<h2 class="section" id="DrawCanvas">
+    The <code> DrawCanvas </code> function </h2>
+<p>
+    This function acts very similar to any other GUI control, with a few exceptions, and is responsible for drawing the Canvas. On the first glance it's just a wrapper for <code> DrawSubCanvas </code> , with the exception that it holds the <code> OverlayGUI </code> and <code> NodeGUISkin </code> code. <code> DrawSubCanvas </code> is used in the future for Nested Canvases, as the name proposes.
+    <br>
+    First of all, the background texture is splattered across the canvas area based on zoom and pan values. Then, the function <code> NodeEditorInputSystem.HandleInputEvents </code> invokes all dynamic input handlers of the input system to catch all kinds of Input events.
+    <br>
+    Afterwards the scale area gets initiated with a call to the custom solution <code> GUIScaleUtility.BeginScale </code> . Any GUI code afterwards is getting scaled appropriately. 
+    That means that now all elements that need to be scaled are drawn, including connections, node transitions, connections, bodies and knobs.
+    Thereafter, the scale area gets closed again with another call to <code> GUIScaleUtility.EndScale </code> .
+    <br>
+    The <code> NodeEditorInputSystem.HandleLateInputEvents </code> function then invokes the dynamic input handlers similar to the version before, 
+    with the exception that only those that have to be handled after GUI are invoked.
+</p>
+
+<h2 class="section" id="TODO"> TODO Framework Explanations </h2> 
+<p>
+    <ul>
+        <li> Dynamic Input System at <code> NodeEditorInputSystem </code> </li>
+        <li> ConnectionType and Node fetching at <code> NodeTypes </code> and <code> ConnectionTypes </code> </li>
+        <li> Knob Behaviour and Possibilities at <code> NodeKnob </code> </li>
+        <li> Event/Callback System at <code> NodeEditorCallbackReceiver </code> </li>
+        <li> Save System at <code> NodeEditorSaveManager </code> </li>
+        <li> Various Utilities like <code> GUIScaleUtility </code> </li>
+        <li> Calculation System at <code> NodeEditor </code> </li>
+        <li> Transitioning System including UnityFunc if they are ready </li>
+        <li> Runtime GUI and limitations at <code> RTEditorGUI </code> mostly </li>
+        <li> Experimental/Conceptional custom NodeCanvases and traversal algorithms </li>
+    </ul>
+</p>
+
+
+					
+				</div>
+			</div>
+		</div>
+
+		<span class="debug"></span>
+
+		<div class="cookieNote">
+			<span>This pages uses cookies for analytical purposes in order to give the author a basic idea of what's going on on his site. You can permanently disable this behaviour if you prefer.</span>
+			<div>
+				<!--<a href="https://www.cookiechoices.org/"><button class="base">Details</button></a>--> <!-- Need to find a link with basic cookie explanation -->
+				<button class="base" onclick="javascript:gaOptout()">Disable</button>
+				<button class="base" onclick="javascript:gaAgree()">OK</button>
+			</div>
+		</div>
+
+		
+<footer>
+	<br> <br>
+	Page developed by Seneral 
+	<br> <br>
+	Contact: <a href="mailto:support@seneral.dev">support@seneral.dev</a>
+	<br> <br>
+</footer>
+
+
+		<script type="text/javascript" src="../../js/jquery-3.1.1.min.js"></script> <!-- https://code.jquery.com/jquery-3.1.1.min.js -->
+		<script type="text/javascript" src="../../js/hisrc-min.js"></script>
+		<script type="text/javascript" src="../../js/page.js"></script>
+
+		
+
+	</div>
+</body>
+</html>

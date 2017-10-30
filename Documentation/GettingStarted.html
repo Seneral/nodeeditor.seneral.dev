@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="21600"> <!-- 6 hours -->
+	<meta name="author" content="Seneral">
+	<meta name="keywords" content="Node Editor, OpenSource, Canvas, Unity, Statemachine">
+	<link rel="icon" type="image/ico" href="../img/Icon/FavIcon_Dark.png">
+
+	<script async type="text/javascript" src="../../js/modernizr-min.js"></script>
+
+	
+<title>Getting Started - Node Editor Framework Documentation</title>
+<meta name="description" content="OpenSource Node Editor Framework - create your own node-based editor!">
+<meta name="keywords" content="Getting Started, Installation">
+
+
+	<link rel="stylesheet" type="text/css" media="screen" href="../../css/style.css">
+
+	<script type="text/javascript">
+		var gaProperty = 'UA-92606737-1';
+		var disableGA = 'ga-disable-' + gaProperty;
+		if (document.cookie.indexOf(disableGA + '=true') > -1)
+			window[disableGA] = true; // Cookie set to disble GA
+		(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;
+			i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();
+			a=s.createElement(o),m=s.getElementsByTagName(o)[0];
+			a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		}) (window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		ga('create', gaProperty, 'auto');
+		ga('set', 'anonymizeIp', true);
+		ga('send', 'pageview');
+	</script>
+</head>
+<body>
+	<div class="bodyStyle">
+		
+<header class="header headerheight">
+	
+		<div class="headerLogo" style="float:left;">
+			<a href="..\..\index.html">
+				<img src="../../img/Icon/FavIcon_tiny.png">
+			</a>
+		</div>
+
+	<div class="container">
+		<div class="headerLogo" style="float:right;">
+			<a href="https://github.com/Seneral/Node_Editor_Framework">
+				<img src="../img/Icon/FavIcon_GH.png">
+			</a>
+		</div>
+
+		<!-- Title on the left side of the header -->
+		<div class="headerLogo">
+			<a href="../index.html">
+				<img src="../img/Icon/FavIcon_Light.png">
+				<span>Node Editor</span>
+			</a>
+		</div>
+
+		<!-- Navigation controls on the right side of the header - main dropdown by default for mobile and navigation bar for desktop -->
+		<div class="navHeader">
+			<nav class="navList">
+				<input id="burgerToggle" class="navToggle" type="checkbox">
+				<label for="burgerToggle" content-toggled="&#735;" class="navButton">&#9776;</label>
+
+				<div class="navContent">
+					<a class="navItem" href="../index.html">Home</a>
+					<div class="navGroup">
+						<a class="navItem">Documentation</a>
+						<div class="navGroupContent">
+							<a class="navItem curNav" href="GettingStarted.html">Getting Started</a>
+							<a class="navItem" href="Extensions.html">Building Extensions</a>
+							<a class="navItem" href="Framework.html">Framework Overview</a>
+						</div>
+					</div>
+					<a class="navItem" href="../Examples.html">Examples</a>
+				</div>
+			
+			</nav>
+		</div>
+	</div>
+</header>
+<!-- Offset content so header doesn't overlap anything -->
+<div class="headerheight"> </div>
+
+
+		
+<div class="banner banner16-5 hisrc">
+    <img class="bannerImg ratio16-7" src="../../img/Banner_NE_LQ.jpg" data-1x="../../img/Banner_NE_MQ.png" data-2x="../../img/Banner_NE_HQ.png">
+    <div class="bannerOverlay">
+        <div class="bannerText">
+            <div class="bannerTextCentered">
+                <br> <br> <big>Node Editor Framework</big> <br> <br> <big>Getting Started</big> <br> <br>
+            </div>
+        </div>
+    </div>
+    <div class="bannerShadowBottom"></div>
+</div>
+
+
+		<!-- Page Content -->
+		<div class="content">
+
+			
+<div class="sidePanel right linkBox sticky">
+    <big>Links</big>
+    <br> <br>
+    <ul class="panelLinks">
+        <li><a href="https://github.com/Seneral/Node_Editor_Framework">Github</a></li>
+        <li><a href="http://www.seneral.dev/WebGL_NodeEditor/">WebGL Demo</a></li>
+        <li><a href="http://forum.unity3d.com/threads/simple-node-editor.189230/#post-2134738">Forum Thread</a></li>
+    </ul>
+</div>
+
+
+			<div class="container">
+				<div class="mainContent">
+
+					
+<h1>Getting Started</h1>
+
+<h2 class="section" id="Installation">Installation</h2>
+<p>
+    Installing is as simple as dragging and dropping the <em>Editor</em> and <em>Node_Editor</em> folders into your project at <em>Assets/Plugins</em>. 
+    It will work anywhere but would require a change in source for long term usage. You are then able to open the window at '<em>Window/Node Editor</em>' when there are no errors in the project.
+</p>
+
+<h2 class="section" id="EditorCanvas">Editor & Canvas</h2>
+<p>
+    You can start off by opening the Editor Window at <em>Window/Node Editor</em>' and loading an example canvas, such as the <em>CalculationCanvas</em>,
+    by using the <em>'File/Load Canvas'</em> menu item at the top left.
+    <br>
+    Using context-clicks you can manipulate the canvas, using drag'n'drop you can drag around and connect node outputs and inputs with each other. 
+    <code>Control</code> will snap nodes to the grid and <code>N</code> will help you navigate back to the origin or the selected node!
+</p>
+
+<h2 class="section" id="Extensions">Example Extensions</h2>
+<p>
+    For examples on simple extensions, check out all '<em>Examples/</em>'-Subbranches on the repository! 
+    <br>
+    One of the currently available examples is the <a href="https://github.com/Baste-RainGames/Node_Editor/tree/Examples/Texture_Composer">Texture Composer</a>, 
+    an example of adding Nodes and ConnectionTypes to extend the framework to simple texture manipulation capabilities. 
+    <br>
+    Another is the <a href="https://github.com/Baste-RainGames/Node_Editor/tree/Examples/Dialogue-System">Dialogue System</a>, 
+    which demonstrates the actual usage of a canvas at runtime to drive a simple dialogue.
+</p>
+
+<h2 class="section" id="Runtime">Runtime Usage</h2>
+<p>
+    For more general ideas on how to use the canvas at runtime, you can check out <code>RTCanvasCalculator</code>, 
+    which is a component that can calculate and debug the canvas at runtime and also implements some basic but useful helper functions to traverse the canvas at runtime. 
+    <br>
+    It is also possible to show the actual GUI at runtime, as <code>RuntimeNodeEditor</code> demonstrates. 
+    It works and looks very similar to the editor window with some limitations due to inaccessibility to the UnityEditor namespace. 
+    But aslong as the Nodes use <code>RTEditorGUI</code> for available UI controls and encapsulate all editor-only GUI parts into a preprocessor checks, 
+    it is totally possible to give your player access to a Node Editor:)
+</p>
+
+
+					
+				</div>
+			</div>
+		</div>
+
+		<span class="debug"></span>
+
+		<div class="cookieNote">
+			<span>This pages uses cookies for analytical purposes in order to give the author a basic idea of what's going on on his site. You can permanently disable this behaviour if you prefer.</span>
+			<div>
+				<!--<a href="https://www.cookiechoices.org/"><button class="base">Details</button></a>--> <!-- Need to find a link with basic cookie explanation -->
+				<button class="base" onclick="javascript:gaOptout()">Disable</button>
+				<button class="base" onclick="javascript:gaAgree()">OK</button>
+			</div>
+		</div>
+
+		
+<footer>
+	<br> <br>
+	Page developed by Seneral 
+	<br> <br>
+	Contact: <a href="mailto:support@seneral.dev">support@seneral.dev</a>
+	<br> <br>
+</footer>
+
+
+		<script type="text/javascript" src="../../js/jquery-3.1.1.min.js"></script> <!-- https://code.jquery.com/jquery-3.1.1.min.js -->
+		<script type="text/javascript" src="../../js/hisrc-min.js"></script>
+		<script type="text/javascript" src="../../js/page.js"></script>
+
+		
+
+	</div>
+</body>
+</html>
