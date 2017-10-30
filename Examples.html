@@ -15,74 +15,7 @@
 <meta name="description" content="OpenSource Node Editor Framework - create your own node-based editor!">
 <meta name="keywords" content="Node Editor, OpenSource, Canvas, Unity, Statemachine">
 
-<style>
-.WebGL_Container {
-	position: relative;
-	width: 100%;
-	height: 100%;
-}
-.fsToggle:checked ~ .WebGL_Container {
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	left: 0;
-	top: 0;
-	z-index: 10;
-}
-
-.WebGL_View {
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	background: #999999;
-}
-
-.barBuffer {
-	height: 40px;
-}
-.fsToggle {
-	display: none;
-}
-.fsButton {
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	background: #999999;
-
-	font-size: 170%;
-	color: #222222;
-	border: 0;
-	outline: none;
-	cursor: pointer;
-	padding: 0.1em 0.3em;
-}
-.fsToggle:checked ~ .fsButton {
-	background: #BBBBBB;
-	content: attr(content-toggled);
-}
-
-.LoadingOverlay {
-	position: absolute;
-	top: 0;
-	bottom: 40px;
-	width: 100%;
-
-	font-size: 250%;
-	font-size: 3vw;
-	font-family: Calibri;
-}
-.LoadingTextContainer {
-	display: table;
-	width: 100%;
-	height: 100%;
-}
-.LoadingTextCentered {
-	display: table-cell;
-	vertical-align: middle;
-	text-align: center;
-}
-</style>
+<link rel="stylesheet" type="text/css" media="screen" href="css/WebGL.css">
 
 
 
@@ -145,7 +78,7 @@
 							<a class="navItem" href="Documentation/Framework.html">Framework Overview</a>
 						</div>
 					</div>
-					<a class="navItem curNav" href="Examples.html">Examples</a>
+					<a class="navItem curNav" href="Examples.html">WebGL Demo</a>
 				</div>
 			
 			</nav>
@@ -157,60 +90,34 @@
 
 
 		
-<div class="banner banner16-5 hisrc">
-	<img class="bannerImg ratio16-7" src="../img/Banner_NE_LQ.jpg" data-1x="../img/Banner_NE_MQ.png" data-2x="../img/Banner_NE_HQ.png">
-	<div class="bannerOverlay">
-		<div class="bannerText">
-			<div class="bannerTextCentered">
-				<br> <big>Node Editor Framework</big> 
-				<br> <small> Modular opensource node framework <br> for creating node based displays and editors </small> <br>
-			</div>
-		</div>
-	</div>
-	<div class="bannerShadowBottom"></div>
-</div>
 
 
 		<!-- Page Content -->
 		<div class="content">
 
 			
-<div class="sidePanel right linkBox sticky">
-    <big>Links</big>
-    <br> <br>
-    <ul class="panelLinks">
-        <li><a href="https://github.com/Seneral/Node_Editor_Framework">Github</a></li>
-        <li><a href="http://www.seneral.dev/WebGL_NodeEditor/">WebGL Demo</a></li>
-        <li><a href="http://forum.unity3d.com/threads/simple-node-editor.189230/#post-2134738">Forum Thread</a></li>
-    </ul>
-</div>
 
 
 			<div class="container">
 				<div class="mainContent">
 
 					
-<h1>Node Editor Framework</h1>
-<input id="boxToggle" class="fsToggle" type="checkbox">
 
+<h1>Node Editor WebGL Demo</h1>
+
+<!-- Node Editor WebGL Demo -->
+<input id="boxToggle" class="WebGL_FSToggle" type="checkbox">
 <div class="WebGL_Container">
-
-	<!--<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>-->
-	
-	<div class="WebGL_View" id="gameContainer"></div>
-
-	<!--<div class="LoadingOverlay">
-		<div class="LoadingTextContainer">
-			<div class="LoadingTextCentered">
-				Loading... <br> <br> made by Seneral
-			</div>
-		</div>
-	</div>-->
-
-	<label for="boxToggle" content-toggled="&#9746;" class="fsButton">&#9744;</label>
+	<!-- Actual WebGL View -->
+	<div class="WebGL_View" id="gameContainer">
+		<canvas id="WebGL_Canvas" style="cursor: default; width: 100%; height: 100%;"></canvas>
+	</div>
+	<!-- WebGL View Controls -->
+	<button class="base" onclick="javascript:loadWebGLDemo()">Load</button>
+	&emsp; Hint: Load example canvases using <em>'File/Load Canvas From Scene'</em>!
+	<label for="boxToggle" content-toggled="&#9746;" class="WebGL_FSButton">&#9744;</label>
 </div>
 
-	
 
 
 					
@@ -244,24 +151,10 @@
 		<script type="text/javascript" src="../js/page.js"></script>
 
 		
-<script src="WebGLBuild/UnityLoader.js"></script>
+<script src="WebGLBuild/UnityLoader-mod.js"></script>
 <script>
-  var gameInstance = UnityLoader.instantiate("gameContainer", "NodeEditor/WebGLBuild/WebGL_NodeEditor.json");
+	function loadWebGLDemo () { var gameInstance = UnityLoader.instantiate("gameContainer", "WebGLBuild/WebGL_NodeEditor.json", "WebGL_Canvas"); }
 </script>
-<!--<script type='text/javascript'>
-	var Module = {
-		TOTAL_MEMORY: 268435456,
-		errorhandler: null,			// arguments: err, url, line. This function must return 'true' if the error is handled, otherwise 'false'
-		compatibilitycheck: null,
-		backgroundColor: "#222C36", // 222C36 // FFFFFF
-		splashStyle: "Light", // Light // Dark
-		dataUrl: "http://www.seneral.dev/WebGL_NodeEditor/Release/WebGL_NodeEditor.data",
-		codeUrl: "http://www.seneral.dev/WebGL_NodeEditor/Release/WebGL_NodeEditor.js",
-		asmUrl: "http://www.seneral.dev/WebGL_NodeEditor/Release/WebGL_NodeEditor.asm.js",
-		memUrl: "http://www.seneral.dev/WebGL_NodeEditor/Release/WebGL_NodeEditor.mem",
-	};
-</script>
-<script src="http://www.seneral.dev/WebGL_NodeEditor/Release/UnityLoader.js"></script>-->
 
 	</div>
 </body>
