@@ -1,0 +1,11 @@
+{
+"TOTAL_MEMORY": 268435456,
+"dataUrl": "WebGL_NodeEditor.data.unityweb",
+"asmCodeUrl": "WebGL_NodeEditor.asm.code.unityweb",
+"asmMemoryUrl": "WebGL_NodeEditor.asm.memory.unityweb",
+"asmFrameworkUrl": "WebGL_NodeEditor.asm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#383838"
+}

@@ -1,0 +1,50 @@
+<!--START%HEAD-->
+<title>Node Editor Framework - OpenSource Project</title>
+<meta name="description" content="OpenSource Node Editor Framework - create your own node-based editor!">
+<meta name="keywords" content="WebGL, Demo, Runtime, Example">
+
+<link rel="stylesheet" type="text/css" media="screen" href="NodeEditor/css/WebGL.css">
+
+<!--END%HEAD-->
+
+<!--START%BANNER-->
+<!--END%BANNER-->
+
+<!--START%SIDE-->
+<div class="sidePanel right linkBox sticky">
+    <big>Links</big>
+    <br> <br>
+    <ul class="panelLinks">
+        <li><a href="https://github.com/Seneral/Node_Editor_Framework">Github</a></li>
+        <li><a href="http://www.seneral.dev/WebGL_NodeEditor/">Old WebGL Demo</a></li>
+        <li><a href="http://forum.unity3d.com/threads/simple-node-editor.189230/#post-2134738">Forum Thread</a></li>
+    </ul>
+</div>
+<!--END%SIDE-->
+
+<!--START%CONTENT-->
+
+<h1>Node Editor WebGL Demo</h1>
+
+<!-- Node Editor WebGL Demo -->
+<input id="boxToggle" class="WebGL_FSToggle" type="checkbox">
+<div class="WebGL_Container">
+	<!-- Actual WebGL View -->
+	<div class="WebGL_View" id="gameContainer">
+		<canvas id="WebGL_Canvas" style="cursor: default; width: 100%; height: 100%;"></canvas>
+	</div>
+	<!-- WebGL View Controls -->
+	<button class="base" onclick="javascript:loadWebGLDemo()">Load</button>
+	&emsp; Hint: Load example canvases using <em>'File/Load Canvas From Scene'</em>!
+	<label for="boxToggle" content-toggled="&#9746;" class="WebGL_FSButton">&#9744;</label>
+</div>
+
+
+<!--END%CONTENT-->
+
+<!--START%SCRIPTS-->
+<script src="NodeEditor/WebGLBuild/UnityLoader-mod.js"></script>
+<script>
+	function loadWebGLDemo () { var gameInstance = UnityLoader.instantiate("gameContainer", "WebGLBuild/WebGL_NodeEditor.json", "WebGL_Canvas"); }
+</script>
+<!--END%SCRIPTS-->

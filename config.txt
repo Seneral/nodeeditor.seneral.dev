@@ -1,0 +1,24 @@
+SOURCE :: "SOURCE"
+BUILD :: "BUILD"
+RELATIVEPATHS :: TRUE
+
+{
+	// Fill in frame with more static content layed out to other classes
+	%HEADER :: "header.html"
+	%FOOTER :: "footer.html"
+
+	// Mark the current page in the navigation bar
+	<a class="navItem" href="$CURPAGE"> :: <a class="navItem curNav" href="$CURPAGE">
+
+	// Page metadata and links
+	%HEAD :: "$CURPAGE"
+	%SCRIPTS :: "$CURPAGE"
+
+	// Page Content
+	%BANNER :: "$CURPAGE"
+	%CONTENT :: "$CURPAGE"
+	%SIDE :: "$CURPAGE"
+
+	// Filler Content
+	%LOREMIPSUM :: "LoremIpsum.html"
+}
