@@ -209,13 +209,16 @@
 <p>
     Implementing custom ConnectionTypes is similar to Node implementation, as it uses the same fetching system: 
     Declare a class inheriting from the <code> IConnectionTypeDeclaration </code> interface and specify it's properties.
-
+    
     <center>
-        <img alt="ConnectionType with IConnectionTypeDeclaration" src="../img/Extensions/ConnectionTypes.png" title="ConnectionTypes.cs: Top: IConnectionTypeDeclaration; Bottom: Built-in Float type"/>
-        <br>
-        ConnectionTypes.cs: Top: IConnectionTypeDeclaration; Bottom: Built-in Float type 
+        <a class="noLinkStyle" href="../img/Extensions/ConnectionTypes.png" target="_blank">
+            <img class="pageImg" style="width: auto;" src="../img/Extensions/ConnectionTypes.png" 
+            alt="ConnectionType with IConnectionTypeDeclaration" 
+            title="ConnectionTypes.cs: Top: IConnectionTypeDeclaration; Bottom: Built-in Float type">
+        <br> ConnectionTypes.cs: Top: IConnectionTypeDeclaration; Bottom: Built-in Float type  <br>
+        </a>
     </center>
-
+    
     <ul>
         <li> The <code> string Identifier </code> is used to address the type </li> 
         <li> The <code> Type Type </code> is the type this declaration representates and which is used to check for connection compability </li>
