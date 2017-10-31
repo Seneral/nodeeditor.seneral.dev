@@ -55,7 +55,7 @@
 		<div class="headerLogo">
 			<a href="../index.html">
 				<img src="../img/Icon/FavIcon_Light.png">
-				<span>Node Editor</span>
+				<span> <small>Node Editor</small> </span>
 			</a>
 		</div>
 
@@ -121,7 +121,7 @@
     <br> <br>
     <ul class="panelLinks">
         <li><a href="https://github.com/Seneral/Node_Editor_Framework">Github</a></li>
-        <li><a href="http://www.seneral.dev/WebGL_NodeEditor/">WebGL Demo</a></li>
+        <li><a href="http://www.seneral.dev/WebGL_NodeEditor/">Old WebGL Demo</a></li>
         <li><a href="http://forum.unity3d.com/threads/simple-node-editor.189230/#post-2134738">Forum Thread</a></li>
     </ul>
 </div>
@@ -330,6 +330,43 @@
         The GUISkin of the Node Editor can currently only be changed by modifying the <code> NodeEditorGUI </code> source file or by replacing the textures. For the future a more extensive and separated control over the GUISkin is planned.
     </p>
 </p>
+
+<h2 class="section" id="Callbacks">Events & Callbacks</h2>
+<p>
+    The Framework supports a collection of events which might be important during the editing process. 
+    Those Events can either be received by subscribing to the appropriate delegate in the NodeEditorCallbacks class or 
+    by extending from NodeEditorCallbackReceiver (which is a MonoBehaviour) and overriding the appropriate method. 
+    Both classes can be found in <code> NodeEditorCallbackReceiver </code>
+
+    <h4> Current Events </h4>
+
+    <ul>
+        <li> <code> OnEditorStartup </code> : The Node Editor gets initiated (can also happen when switching scene or playmode) </li>
+        <li> <code> OnLoadCanvas </code> (NodeCanvas): The passed canvas has been loaded as a copy </li>
+        <li> <code> OnLoadEditorState </code> (NodeEditorState): The passed editorState has been loaded as a copy </li>
+        <li> <code> OnSaveCanvas </code> (NodeCanvas): The passed canvas has been saved as a copy </li>
+        <li> <code> OnSaveEditorState </code> (NodeEditorState): The passed editorState has been saved as a copy </li>
+        <br/>
+        <li> <code> OnAddNode </code> (Node): The passed node has been created or duplicated </li>
+        <li> <code> OnDeleteNode </code> (Node): The passed node will get deleted </li>
+        <li> <code> OnMoveNode </code> (Node): The passed node has been moved by the user </li>
+        <br/> 
+        <li> <code> OnAddConnection </code> (NodeInput): A new connection has been added to the passed input. If it had a connection before, <em> OnRemoveConnection </em> has been called, too </li>
+        <li> <code> OnRemoveConnection </code> (NodeInput): The connection will get removed from this input</li> 
+    </ul>
+
+    <h4> WIP Transitioning System: </h4>
+    <ul>
+        <li> <code> OnAddTransition </code> (Transition): The passed transition has been created </li>
+        <li> <code> OnRemoveTransition </code> (Transition): The passed transition will be removed </li> 
+    </ul>
+
+    -> Some of the Node-specific callbacks can also be accessed from the Node directly by overriding the appropriate method. 
+    <br/>
+    -> You can always implement additional callbacks or request them to be implemented!
+
+</p>
+
 
 <!--
 <h2 class="section" id="Topics">Covered Topics</h2>
