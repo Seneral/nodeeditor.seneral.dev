@@ -123,39 +123,76 @@
 
 <h2 class="section" id="Installation">Installation</h2>
 <p>
-    Installing is as simple as dragging and dropping the <em>Editor</em> and <em>Node_Editor</em> folders into your project at <em>Assets/Plugins</em>. 
+    First, download the source files from the repository. 
+    Make sure you differentiate between the <a href="https://github.com/Seneral/Node_Editor_Framework/tree/develop">develop branch</a> and 
+    the <a href="https://github.com/Seneral/Node_Editor_Framework/tree/master">master branch</a>. 
+    For this project, the develop branch is generally better supported and has more features due to lack of frequent synchronizations, most examples base off the develop branch. 
+    <br><br>
+    Installing is as simple as dragging and dropping the <em>Editor</em> and <em>Node_Editor</em> folders into your project at <em>Assets/Plugins</em>.
     It will work anywhere but would require a change in source for long term usage. You are then able to open the window at '<em>Window/Node Editor</em>' when there are no errors in the project.
 </p>
 
-<h2 class="section" id="EditorCanvas">Editor & Canvas</h2>
+<h2 class="section" id="EditorWindow">The Editor Window</h2>
 <p>
-    You can start off by opening the Editor Window at <em>Window/Node Editor</em>' and loading an example canvas, such as the <em>CalculationCanvas</em>,
-    by using the <em>'File/Load Canvas'</em> menu item at the top left.
+    You can start off by opening the Editor Window at <em>Window/Node Editor</em>'. 
+    Depending on the version you'll either have a toolbar at the top or a sidepanel at the right, aswell as the canvas surface in the center. 
+    Load one of the example canvases, such as the <em>CalculationCanvas</em>, by using the <em>'File/Load Canvas'</em> menu item in the toolbar or the '<em>Load Canvas</em>' in the Side panel.
+    It is located in the '<em>Node_Editor/Resources/Saves/</em> folder.
+    <br><br>
+    The canvas surface in the center can be transformed by dragging with the left mouse button on the background and using the mouse wheel to zoom.
+    Dragging a node will move it, and clicking and dragging from a connection knob on one of the nodes will edit the connection.
+    You can start a new connection by dragging from a output knob (N>) to an input knob (>N) of the same type (color). 
+    <br><br>
+    Using the context (right-click) on the canvas surface allows you to add nodes and groups, using the context on nodes gives you the option to delete or duplicate them. 
     <br>
-    Using context-clicks you can manipulate the canvas, using drag'n'drop you can drag around and connect node outputs and inputs with each other. 
-    <code>Control</code> will snap nodes to the grid and <code>N</code> will help you navigate back to the origin or the selected node!
+    There are also a few keys you can use: <code>Control</code> will snap nodes to the grid and <code>N</code> will help you navigate back to the origin or the selected node.
 </p>
 
-<h2 class="section" id="Extensions">Example Extensions</h2>
+<h2 class="section" id="Examples">Examples</h2>
 <p>
-    For examples on simple extensions, check out all '<em>Examples/</em>'-Subbranches on the repository! 
+   There are several great examples depending on how you are planning to use the framework. You can find them as a subbranches of the repository in '<em>Examples/</em>' and need to be copied into a project already containing the Node Editor Framework (<b>most use the develop branch!</b>):
+<br>
+<ol>
+    <li>
+        The <b><a href="https://github.com/Seneral/Node_Editor_Framework/tree/Examples/Texture_Composer">Texture Composer</a></b>, as seen in the title screen, 
+        is a very simple setup of a few texture nodes built upon the default calculation canvas in the framework. 
+        Start here to get a basic idea on how to create simple extensions of the framework with custom functionality.
+    </li>
     <br>
-    One of the currently available examples is the <a href="https://github.com/Baste-RainGames/Node_Editor/tree/Examples/Texture_Composer">Texture Composer</a>, 
-    an example of adding Nodes and ConnectionTypes to extend the framework to simple texture manipulation capabilities. 
+    <li>
+        A complex, but great example is the <b><a href="https://github.com/Seneral/Node_Editor_Framework/tree/Examples/Dialogue-System">Dialogue System</a></b>, 
+        developed and maintained by <a href="https://github.com/ChicK00o">ChicK00o</a> and <a href="https://github.com/atrblizzard">atrblizzard</a>. <br>
+        Making excellent use of the framework's modularity to extend the frameworks capability and behaviour to get a basic dialogue system, 
+        including the editing and runtime execution (with an example scene), up and running. <br>
+        Check it out if you want to get an idea of a bigger setup expanding on the Node Editor Framework with custom rules.
+    </li>
     <br>
-    Another is the <a href="https://github.com/Baste-RainGames/Node_Editor/tree/Examples/Dialogue-System">Dialogue System</a>, 
-    which demonstrates the actual usage of a canvas at runtime to drive a simple dialogue.
+    <li>
+        Another set of nodes is the <b><a href="https://github.com/Seneral/Node_Editor_Framework/tree/Examples/ExpressionNodes">Expression Node</a></b> example (outdated). <br>
+        These are a bit different as they use reflection to inject any type of variable into the framework, to convert or execute code on. <br>
+        It's main purpose is to show complex modifications of the Node Knobs and general extended use of the framework.
+    </li>
+    <br>
+    <li>
+        A small example of extending the editor controls can be seen in the included 
+        <b><a href="https://github.com/Seneral/Node_Editor_Framework/blob/develop/Node_Editor/Framework/Core/NodeGroup.cs">Node Group</a></b>. 
+        It contains custom controls to handle without modifying any framework code.
+    </li>
+</ol>
 </p>
 
 <h2 class="section" id="Runtime">Runtime Usage</h2>
 <p>
-    For more general ideas on how to use the canvas at runtime, you can check out <code>RTCanvasCalculator</code>, 
-    which is a component that can calculate and debug the canvas at runtime and also implements some basic but useful helper functions to traverse the canvas at runtime. 
+    For a more general example on how to use the canvas at runtime, check out the <code>RTCanvasCalculator</code> component, 
+    which can calculate and debug the canvas at runtime and also implements some basic but useful helper functions to traverse the canvas at runtime. 
     <br>
-    It is also possible to show the actual GUI at runtime, as <code>RuntimeNodeEditor</code> demonstrates. 
-    It works and looks very similar to the editor window with some limitations due to inaccessibility to the UnityEditor namespace. 
-    But aslong as the Nodes use <code>RTEditorGUI</code> for available UI controls and encapsulate all editor-only GUI parts into a preprocessor checks, 
-    it is totally possible to give your player access to a Node Editor:)
+    Taking the <code>RuntimeNodeEditor</code> component as an example you can also implement a full node editor in your actual game/application. 
+    It works and looks very similar to the editor window with some limitations in regards to the UI due to inaccessibility to the UnityEditor namespace. 
+    <br>
+    If you want to create runtime-compatible nodes, they need to use the included <code>RTEditorGUI</code> 
+    for available UI controls and encapsulate all editor-only GUI parts into a preprocessor check.
+    <br>
+    As a great example for runtime use, check out the <a href="http://www.seneral.dev/NodeEditor/Examples.html">WebGL Demo</a> of the Node Editor on this page!
 </p>
 
 
