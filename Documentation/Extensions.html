@@ -175,7 +175,7 @@
                 </li>
                 <li> 
                     bool <b>AutoLayout</b> = false <br> 
-                    <small>Toggles auto-resiying of the node to adapt to content. If set to true, MinSize is regarded.</small>
+                    <small>Toggles auto-resizing of the node to adapt to content. If set to true, MinSize is regarded.</small>
                 </li>
                 <li> 
                     Vector2 <b>MinSize</b> = (100, 50) <br>
@@ -202,8 +202,8 @@
         <li>
             Method <b><code>public override void NodeGUI</code></b>
             <ul>
-                <li> Draw node GUI and expose properties for editing using <code>GUILayout/EditorGUILayout/RTEditorGUI</code> functions </li>
-                <li> Display/Position connection ports using their methods <code> DisplayLayout/SetPosition </code> to position (and draw) them. </li>
+                <li> Draw node GUI and expose properties for editing using <code>GUILayout/EditorGUILayout/RTEditorGUI</code> functions. </li>
+                <li> Display/Position connection ports using their methods <code> DisplayLayout/SetPosition </code> . </li>
             </ul>
         </li>
         <li> 
@@ -239,8 +239,8 @@
 
             <div class="indented">
                 <big><b><code>ConnectionKnob : ConnectionPort</code></b></big> <br>
-                A knob at the side of a node, able to connect to other knobs on other nodes. <br>
-                Additionally defines node side and position at that node side. Also enforces specification of a direction. <br>
+                A knob at the side of a node, able to connect to other knobs on other nodes, provided they have an opposite direction. <br>
+                Additionally defines node side and position at that node side. Also (currently) enforces specification of a direction. <br>
                 Does NOT define purpose of the knob. <br>
                 <b>Attribute: <code>ConnectionKnobAttribute</code></b> <br>
                 <b>Style: <code>ConnectionKnobStyle</code></b> <br>
@@ -249,7 +249,7 @@
                 <div class="indented">
                     <big><b><code>ValueConnectionKnob : ConnectionKnob</code></b></big>
                     <br>
-                    A knob of a specific type at the side of a node, able to connect to other knobs of the same type on other nodes. <br>
+                    A knob of a specific type at the side of a node, able to connect to other knobs of the same typeand opposite direction on other nodes. <br>
                     Additionally defines a Type, which is enforced, and as such a purpose for the knob, to carry values from one end to the other. <br>
                     <b>Attribute: <code>ConnectionKnobAttribute</code></b> <br>
                     <b>Style: <code>ConnectionKnobStyle</code></b> <br>
@@ -261,7 +261,9 @@
         <br>
         The corresponding attribute specifies details about a specific ConnectionPort and is used for creation. <br>
         The corresponding style can be extended to predefine styles (or in the case of ValueConnectionKnob, types), to be passed by their styleID to the attribute on creation. <br>
-        In basically all cases the corresponding classes are NOT interchangable between hierarchy levels, means you can't use a ConnectionPortStyle for a ValueConnectionKnob definition. <br>
+        In basically all cases the corresponding classes are NOT interchangable between hierarchy levels, 
+        means you can't use a ConnectionPortStyle for a ValueConnectionKnob definition, 
+        because it's missing vital information for the creation of a ValueConnectionKnob (like type). <br>
     </p>
 
 
@@ -297,14 +299,14 @@
 
     <h4> Implementation </h4>
     <p>
-        Refer to the NodeCanvas class and the following examples for implementation guidelines for you own custom NodeCanvas type. <br> 
+        Refer to the NodeCanvas class and the following examples for implementation guidelines on your own custom NodeCanvas type. <br> 
         At core creating a custom NodeCanvas works the same way as creating custom Nodes, the framework fetches all NodeCanvas types dynamically and presents them to the user.
         The NodeCanvasTraversal on the other hand is not handled by the framework, but by the canvas implementation itself. 
         <br> <br>
         The simplest form of canvas is the included <code>CalculationCanvasType</code>, which has no additional rules or restrictions. <br>
         The included <code>GraphCanvasType</code> on the other hand has a dedicated traversal system and also makes sure there is always exactly one root node. <br>
         A more complex example of a custom NodeCanvas can be found on the branch 
-        <em> <a href="https://github.com/Baste-RainGames/Node_Editor/tree/Examples/Dialogue-System"> Examples/Dialogue System </a> </em> 
+        <em> <a href="https://github.com/Baste-RainGames/Node_Editor/tree/Examples/Dialogue-System" target="_blank"> Examples/Dialogue System </a> </em> .
     </p>
 </p>
 
@@ -312,8 +314,8 @@
 <h2 class="section" id="InputControls">Custom Input Controls</h2>
 <p>
     For your Editor Extension you might want to add custom controls or functions to the context clicks of both the canvas and the editor. <br>
-    Using the new dynamic Input system it is very easy to do just that using four provided attributes which can be stacked as you wish. <br>
-    Before explaining these in detail, it might be worth checking the default controls out in <code> NodeEditorInputControls </code> ! 
+    Using the dynamic Input system it is very easy to do just that using four provided attributes which can be applied to static handler functions. <br>
+    Before explaining these in detail, it might be worth checking out the default controls in <code> NodeEditorInputControls </code> ! 
     <br><br>
     The primary information container, <code> <b>NodeEditorInputInfo</b> </code>, contains all informations about an event, including the editorState,
     the mouse position and the invoking event. It is used to provide all necessary information to the dynamic input handlers.
@@ -363,7 +365,7 @@
     The following outlines the most important things to consider in order to build a basic Node Editor Interface in both Runtime and the Editor. <br>
     <br>
     There are actually two different entities you can either use or replace, depending on how much you want to customize.
-    NodeEditorInterface, which is eases for the interface, and NodeEditorUserCache, which takes care of storing and caching the canvas.
+    NodeEditorInterface, which helps building the interface, and NodeEditorUserCache, which takes care of storing and caching the canvas.
 
     <h4> Editor Canvas Storage </h4>
     <p>
