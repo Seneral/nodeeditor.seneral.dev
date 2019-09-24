@@ -1,0 +1,41 @@
+ {
+	"sourceFolder": "SOURCE",
+	"buildFolder": "BUILD",
+	"relativePaths": true,
+	"onlyExisting": false,
+	"rules":[
+		{
+			"match": "<!--%HEADER-->",
+			"source": "header.html"
+		},
+		{
+			"match": "<a class=\"navItem\" href=\"$CURPAGE\">",
+			"value": "<a class=\"navItem curNav\" href=\"$CURPAGE\">"
+		},
+		{
+			"match": "<!--%HEAD-->",
+			"select": "<!--START%HEAD-->(.*?)<!--END%HEAD-->",
+			"source": "$CURPAGE"
+		},
+		{
+			"match": "<!--%SCRIPTS-->",
+			"select": "<!--START%SCRIPTS-->(.*?)<!--END%SCRIPTS-->",
+			"source": "$CURPAGE"
+		},
+		{
+			"match": "<!--%BANNER-->",
+			"select": "<!--START%BANNER-->(.*?)<!--END%BANNER-->",
+			"source": "$CURPAGE"
+		},
+		{
+			"match": "<!--%CONTENT-->",
+			"select": "<!--START%CONTENT-->(.*?)<!--END%CONTENT-->",
+			"source": "$CURPAGE"
+		},
+		{
+			"match": "<!--%SIDE-->",
+			"select": "<!--START%SIDE-->(.*?)<!--END%SIDE-->",
+			"source": "$CURPAGE"
+		}
+	]
+}

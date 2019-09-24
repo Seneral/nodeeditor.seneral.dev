@@ -1,0 +1,349 @@
+<!--START%HEAD-->
+<title>Extensions - Node Editor Framework Documentation</title>
+<meta name="description" content="OpenSource Node Editor Framework - create your own node-based editor!">
+<meta name="keywords" content="Custom, Nodes, Canvas, Types, Connections, Editor">
+<!--END%HEAD-->
+
+<!--START%BANNER-->
+<div class="banner banner16-5 hisrc">
+    <img class="bannerImg ratio16-7" src="img/Banner_NE_LQ.png" data-1x="img/Banner_NE_MQ.png" data-2x="img/Banner_NE_MQ.png">
+    <div class="bannerOverlay">
+        <div class="bannerText">
+            <div class="bannerTextCentered">
+                <br> <br> <big>Node Editor Framework</big> <br> <br> <big>Building Extensions</big> <br> <br>
+            </div>
+        </div>
+    </div>
+    <div class="bannerShadowBottom"></div>
+</div>
+<!--END%BANNER-->
+
+<!--START%SIDE-->
+<div class="sidePanel left navBox sticky">
+    <big>Navigation</big>
+    <br> <br>
+    <ul class="panelLinks">
+        <li><a href="#Nodes">Custom Nodes</a></li>
+        <li><a href="#Connections">Connections</a></li>
+        <li><a href="#NodeCanvas">Custom NodeCanvas</a></li>
+        <li><a href="#InputControls">Custom Input Controls</a></li>
+        <li><a href="#Editor">Custom Editor</a></li>
+        <li><a href="#Callbacks">Events & Callbacks</a></li>
+    </ul>
+</div>
+<div class="sidePanel right linkBox sticky">
+    <big>Links</big>
+    <br> <br>
+    <ul class="panelLinks">
+        <li><a href="https://github.com/Seneral/Node_Editor_Framework">Github</a></li>
+        <li><a href="https://forum.unity3d.com/threads/simple-node-editor.189230/#post-2134738">Forum Thread</a></li>
+    </ul>
+</div>
+<!--END%SIDE-->
+
+<!--START%CONTENT-->
+<h1>Building Extensions</h1>
+<p>
+    This Page will guide you to create your own extensions up to a complete tool based on this framework.
+    Most of this is made possible by dynamically fetching new content (like nodes and other type specifications).
+    <br>
+    On the other hand, if you directly need to modify the framework itself, 
+    refer to the <a href="Framework.html">Framework Overview</a> to get a glimpse on how each framework part works.
+</p>
+
+
+<h2 class="section" id="Nodes">Custom Nodes</h2>
+<p>
+    Creating custom nodes is the core of every extension. It allows you to add new functionality to your graphs. Fortunately it is also pretty easy to do! <br>
+    A node script needs to extend the <code>NodeEditorFramework.Node</code> class in order to provide the framework with the information needed. <br>
+    The optional <code>Node</code> attribute added to the extended Node class specifies information about the presentation of the node in the editor.
+    <br><br>
+    The node can be placed anywhere in the project, as the Framework will dynamically fetch all Node implementations from all the standard script assemblies.
+    That also means that, even though the Framework is programmed in C#, you can add nodes in UnityScript with the limitation that they have to be compiled in phase 2,3 or 4, 
+    as described <a href="https://docs.unity3d.com/Manual/ScriptCompileOrderFolders.html"> here </a>. Therefore the node implementation is described language independently. 
+    <br> <br>
+    The following list outlines the necessary Node members. You can take reference from the ExampleNode found in '<em>Plugins/Node_Editor/Nodes/Example</em>'. <br>
+    <b>This applies only to the new system in the develop Branch!</b>
+    <br>
+
+    <a href="img/Extensions/Node.png" target="_blank"><img class="sideImg" src="img/Extensions/Node.png" alt="Simple example Node code"></a>
+    
+    <ul>
+        <li> <b><code> using NodeEditorFramework </code></b> </li> 
+        <li> <b> class extending <code> NodeEditorFramework.Node </code></b> </li> 
+        <li> Optional <b><code> Node Attribute</code></b> <small> (hide?, contextPath, [limitToCanvasType]) </small> </li> 
+        <li> <b>Unique Node ID</b>: define with <b><code>const ID</code></b>, expose with <b><code>override GetID</code></b> </li>
+        <li> 
+            Optional overrideable <b>behaviour options</b>
+            <ul>
+                <li> 
+                    string <b>Title</b> = [Class Name] <br> 
+                    <small>Specifies the node title.</small>
+                </li>
+                <li> 
+                    Vector2 <b>DefaultSize</b> = (200, 100) <br> 
+                    <small>Specifies the default size of the node when AutoLayout is turned off.</small>
+                </li>
+                <li> 
+                    bool <b>AutoLayout</b> = false <br> 
+                    <small>Toggles auto-resizing of the node to adapt to content. If set to true, MinSize is regarded.</small>
+                </li>
+                <li> 
+                    Vector2 <b>MinSize</b> = (100, 50) <br>
+                    <small>Specifies the minimum size the node can have if no content is present.</small>
+                </li>
+                <li> 
+                    bool <b>AllowRecursion</b> = false <br> 
+                    <small>Specifies if this node handles recursive node loops. For a loop to be permitted atleast one node needs to handle it.</small>
+                </li>
+                <li> 
+                    bool <b>ContinueCalculation</b> = true <br>
+                    <small>Specifies if calculation should continue after this node has been successfully calculated.</small>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <b>Connection Port Definitions</b> (more information below)
+            <ul>
+                <li> Attribute corresponding to the type to specify port properties. </li>
+                <li> Actual variable to hold the port defined in the corresponding attribute. </li>
+            </ul>
+        </li>
+        <li> Method <b><code>protected override void OnCreate</code></b> </li>
+        <li>
+            Method <b><code>public override void NodeGUI</code></b>
+            <ul>
+                <li> Draw node GUI and expose properties for editing using <code>GUILayout/EditorGUILayout/RTEditorGUI</code> functions. </li>
+                <li> Display/Position connection ports using their methods <code> DisplayLayout/SetPosition </code> . </li>
+            </ul>
+        </li>
+        <li> 
+            Method <b><code> public override bool Calculate </code></b>
+            <ul>
+                <li> Use <b><code>connected/GetValue</code></b> functions on your input ports to get their state and value. </li>
+                <li> Use <b><code>SetValue</code></b> function on your output ports to set their calculated value. </li>
+                <li> Return false if something went wrong, else true! </li>
+            </ul>
+        </li>
+    </ul>
+</p>
+
+
+<h2 class="section" id="Connections">Connections</h2>
+<p>
+    <em>NOTE: The following has been greatly revamped in the latest develop branch, and <b>does not apply to the master branch anymore!</b></em>
+
+    <h4> Connection Types </h4>
+    <p>
+        Understanding the hierarchy of the Connection Types is crucial for understanding the creation and styling of connections. <br>
+        Basically the hierarchy allows to abstract features based on needs and future expansion of connection types, like transitions. <br>
+        For each of these Connection Types, there are actually two more classes following the same hierarchy: the Attribute and the Style. <br>
+
+        <div class="indented">
+            <big><b><code>ConnectionPort</code></b></big> <br>
+            A generic port of a node, able to connect to other ports of other nodes. <br>
+            Defines name, which is enforced, and optionally styleID, direction and maximum connection count. <br>
+            Does NOT define position or purpose or any of that matter. <br>
+            <b>Attribute: <code>ConnectionPortAttribute</code></b> <br>
+            <b>Style: <code>ConnectionPortStyle</code></b> <br>
+            <br>
+
+            <div class="indented">
+                <big><b><code>ConnectionKnob : ConnectionPort</code></b></big> <br>
+                A knob at the side of a node, able to connect to other knobs on other nodes, provided they have an opposite direction. <br>
+                Additionally defines node side and position at that node side. Also (currently) enforces specification of a direction. <br>
+                Does NOT define purpose of the knob. <br>
+                <b>Attribute: <code>ConnectionKnobAttribute</code></b> <br>
+                <b>Style: <code>ConnectionKnobStyle</code></b> <br>
+                <br>
+
+                <div class="indented">
+                    <big><b><code>ValueConnectionKnob : ConnectionKnob</code></b></big>
+                    <br>
+                    A knob of a specific type at the side of a node, able to connect to other knobs of the same typeand opposite direction on other nodes. <br>
+                    Additionally defines a Type, which is enforced, and as such a purpose for the knob, to carry values from one end to the other. <br>
+                    <b>Attribute: <code>ConnectionKnobAttribute</code></b> <br>
+                    <b>Style: <code>ConnectionKnobStyle</code></b> <br>
+                </div>
+            </div>
+        </div>
+        <br>
+        For the most case, you'll want to use ValueConnectionKnob, which allows you to actually pass values through the connection. <br>
+        <br>
+        The corresponding attribute specifies details about a specific ConnectionPort and is used for creation. <br>
+        The corresponding style can be extended to predefine styles (or in the case of ValueConnectionKnob, types), to be passed by their styleID to the attribute on creation. <br>
+        In basically all cases the corresponding classes are NOT interchangable between hierarchy levels, 
+        means you can't use a ConnectionPortStyle for a ValueConnectionKnob definition, 
+        because it's missing vital information for the creation of a ValueConnectionKnob (like type). <br>
+    </p>
+
+
+    <h4> Connection Port Creation </h4>
+    <p>
+        Now, to create a new ConnectionPort in your node, as mentioned above, you need to declare it as a normal field
+        and apply the corresponding attribute to it, specifiying all required (or optional) information. <br>
+        <br>
+        <code>
+            [ValueConnectionKnob("Input", Direction.In, "Float")] <br>
+            public ValueConnectionKnob inputKnob;
+        </code>
+        <br> <br>
+        The framework automatically creates the knob according to the information you specified in the attribute. <br>
+        This attribute can also be used to manually/procedurally create knobs using designed functions (for example refer to ResizingNode). <br>
+        <br>
+        The here used styleID "Float" is part of the standard framework and it's definition looks like this:
+        <a href="img/Extensions/ConnectionStyleFloat.png" target="_blank">
+            <img class="pageImg" style="width: auto;" src="img/Extensions/ConnectionStyleFloat.png" alt="Float Connection Type Definition">
+        </a>
+    </p>
+</p>
+
+
+<h2 class="section" id="NodeCanvas">Custom Node Canvas</h2>
+<p>
+    <em> NOTE: This section is WIP! This feature may also not have reached it's final stage yet and is <b>only available on the develop branch!</b> </em> 
+    <br> <br>
+    If you need complete control over the lifetime of your canvas, the available nodes or restrictions on how nodes are used, 
+    you can create a custom Node Canvas Type to drive some functionalities manually. 
+    Additionally to that, you can also create your custom traversal routines for your canvases. 
+    The default traversal routine calculates the node in an ordinary left-right fashion, but that can be completely replaced if you desire.
+
+    <h4> Implementation </h4>
+    <p>
+        Refer to the NodeCanvas class and the following examples for implementation guidelines on your own custom NodeCanvas type. <br> 
+        At core creating a custom NodeCanvas works the same way as creating custom Nodes, the framework fetches all NodeCanvas types dynamically and presents them to the user.
+        The NodeCanvasTraversal on the other hand is not handled by the framework, but by the canvas implementation itself. 
+        <br> <br>
+        The simplest form of canvas is the included <code>CalculationCanvasType</code>, which has no additional rules or restrictions. <br>
+        The included <code>GraphCanvasType</code> on the other hand has a dedicated traversal system and also makes sure there is always exactly one root node. <br>
+        A more complex example of a custom NodeCanvas can be found on the branch 
+        <em> <a href="https://github.com/Seneral/Node_Editor_Framework/tree/Examples/Dialogue-System" target="_blank"> Examples/Dialogue System </a> </em> .
+    </p>
+</p>
+
+
+<h2 class="section" id="InputControls">Custom Input Controls</h2>
+<p>
+    For your Editor Extension you might want to add custom controls or functions to the context clicks of both the canvas and the editor. <br>
+    Using the dynamic Input system it is very easy to do just that using four provided attributes which can be applied to static handler functions. <br>
+    Before explaining these in detail, it might be worth checking out the default controls in <code> NodeEditorInputControls </code> ! 
+    <br><br>
+    The primary information container, <code> <b>NodeEditorInputInfo</b> </code>, contains all informations about an event, including the editorState,
+    the mouse position and the invoking event. It is used to provide all necessary information to the dynamic input handlers.
+    <br><br>
+    The following event attributes work on the concept of <b>priority</b>, which is an optional parameter.
+    It primarily defines the order of execution, starting from the lowest value (in small negatives) to 100. 
+    Specifying a value above 100 will execute the input after the GUI has been processed, to make sure it does not block the UI. 
+
+    <h4> EventHandler Attribute </h4>
+    <p>
+        The <code> EventHandlerAttribute </code> is used to handle arbitrary events for the Node Editor and is the most flexible attribute.
+        Some default controls like Node dragging, panning, zooming and Node connecting could only be implemented using this attribute. <br>
+        Tagging a static function with this attribute makes it get called when the specified 'EventType' occurs (or always when no event specified).
+        <br> The method signature <strong> must </strong> be as follows:[ Return: Void; Params: NodeEditorInputInfo ] 
+    </p>
+
+    <h4> Hotkey Attribute </h4>
+    <p>
+        The <code> HotkeyAttribute </code> is used to provide a simple interface for hotkeys for the Node Editor. 
+        Some default controls like Navigating ('N') and Snapping ('Control') are implemented using this attribute. <br>
+        It allows you to specify a <code> KeyCode </code> / <code> EventModifier </code> combination with a limiting 
+        <code> EventType </code> to specify when the tagged static function gets called.
+        <br> The method signature <strong> must </strong> be as follows:[ Return: Void; Params: NodeEditorInputInfo ] 
+    </p>
+
+    <h4> ContextEntry Attribute </h4>
+    <p>
+        The <code> ContextAttribute </code> is used to register context entries for the NodeEditor.
+        The tagged function is called when the context element at the specified path is selected. <br>
+        In which context menu to add this element is specified by the type, like the node context click or the canvas context click.
+        <br> The method signature <strong> must </strong> be as follows:[ Return: Void; Params: NodeEditorInputInfo ] 
+    </p>
+
+    <h4> ContextFiller Attribute </h4>
+    <p>
+        The <code> ContextFillerAttribute </code> is used to register context entries in the Node Editor in a dynamic, conditional or procedural way. <br>
+        This function will be called to fill the passed context <code> GenericMenu </code> in any way it likes to. Again the type specifies the context menu to fill. 
+        <br> The method signature <strong> must </strong> be as follows:[ Return: Void; Params: NodeEditorInputInfo, GenericMenu ]
+    </p>
+</p>
+
+
+<h2 class="section" id="Editor">Custom Editor</h2>
+<p>
+    The provided Editor Window serves as the default Node Canvas Explorer for all normal extensions and works perfectly fine in most cases. <br>
+    But in order to make your extension stand out or implement custom functionalities, you might want to built your own Editor Interface. <br>
+    The following outlines the most important things to consider in order to build a basic Node Editor Interface in both Runtime and the Editor. <br>
+    <br>
+    There are actually two different entities you can either use or replace, depending on how much you want to customize.
+    NodeEditorInterface, which helps building the interface, and NodeEditorUserCache, which takes care of storing and caching the canvas.
+
+    <h4> Editor Canvas Storage </h4>
+    <p>
+        The Editor has to store the NodeCanvas and it's NodeEditorState and manage them apropriately. 
+        For a detailed explanation of these, refer to the <a href="Framework.html"> Framework Overview </a> . 
+        <br>
+        <b> <code> NodeEditorUserCache </code></b> is a class to aid your extension managing the Canvas and EditorState. 
+        It handles storing, saving/loading and caching of the canvas. 
+        In most cases, you don't even need to edit this, unless you want to change the standard save behaviour.
+        Check out either NodeEditorWindow or RTNodeEditor for reference on how to use it.
+    </p>
+
+    <h4> Editor GUI & Interface </h4>
+    <p>
+        Before anything else, <code> OverlayGUI.StartOverlayGUI / OverlayGUI.EndOverlayGUI </code> and <code> NodeEditorGUI.StartNodeGUI / NodeEditorGUI.EndNodeGUI </code>
+        need to be wrapped around the GUI code to get the custom popups to work and make the GUI look uniform.
+        <br><br>
+        Before drawing the canvas surface, make sure the canvas is loaded and assign the area rect to <code> NodeEditorState.canvasRect </code>. <br>
+        Then, in order to account for errors that may be thrown, embed the following drawing function in a try-catch block that unloads the canvas when an error was thrown. 
+        Make sure you only catch <code> UnityExceptions </code> though, because of a Unity bug all pickers like 
+        <code> ColorField </code> , <code> CurveField </code> or <code> ObjectField </code> will throw an error when inside a <code> System.Exception </code>-try-catch-block. <br>
+        In this try-catch-block you can safely call <code> NodeEditor.DrawCanvas </code> , passing both the <code> NodeCanvas </code> and the <code> EditorState </code> ,
+        in order to draw the canvas in the specified area. 
+        <br><br>
+        Finally, for your sorrounding interface, you can either roll your own or use the shared NodeEditorInterface class. 
+        This allows you to quickly create controls for your canvas like the toolbar or modal panels (in the develop branch only).
+        They are very straightforward to use, refer to either NodeEditorWindow or RTNodeEditor for reference once again.
+    </p>
+
+    <h4> Custom GUI Skin </h4>
+    <p>
+        The GUISkin of the Node Editor can currently only be changed by modifying the <code> NodeEditorGUI </code> source file or by replacing the textures. For the future a more extensive and separated control over the GUISkin is planned.
+    </p>
+</p>
+
+
+<h2 class="section" id="Callbacks">Events & Callbacks</h2>
+<p>
+    The Framework supports a collection of events which might be important during the editing process. 
+    Those Events can either be received by subscribing to the appropriate delegate in the NodeEditorCallbacks class or 
+    by extending from NodeEditorCallbackReceiver (which is a MonoBehaviour) and overriding the appropriate method. 
+    Both classes can be found in <code> NodeEditorCallbackReceiver </code>
+
+    <ul>
+        <li> <code> OnEditorStartup </code> : The Node Editor gets initiated (can also happen when switching scene or playmode) </li>
+        <br>
+        <li> <code> OnLoadCanvas </code> (NodeCanvas): The passed canvas has been loaded as a copy </li>
+        <li> <code> OnLoadEditorState </code> (NodeEditorState): The passed editorState has been loaded as a copy </li>
+        <li> <code> OnSaveCanvas </code> (NodeCanvas): The passed canvas has been saved as a copy </li>
+        <li> <code> OnSaveEditorState </code> (NodeEditorState): The passed editorState has been saved as a copy </li>
+        <br>
+        <li> <code> OnAddNode </code> (Node): The passed node has been created or duplicated </li>
+        <li> <code> OnDeleteNode </code> (Node): The passed node will get deleted </li>
+        <li> <code> OnMoveNode </code> (Node): The passed node has been moved by the user </li>
+        <li> <code> OnAddConnectionPort </code> (ConnectionPort): The ConnectionPort has been dynamically added. </li>
+        <br>
+        <li> <code> OnAddConnection </code> (ConnectionPort, ConnectionPort): A new connection has been created between both ports. </li>
+        <li> <code> OnRemoveConnection </code> (ConnectionPort, ConnectionPort): The connection between both ports will get removed. </li> 
+    </ul>
+
+    <big>Note:</big> 
+    <br> -> Some of the Node-specific callbacks can also be accessed from the Node directly by overriding the appropriate method. 
+    <br> -> You can always implement additional callbacks or request them to be implemented!
+
+</p>
+<!--END%CONTENT-->
+
+
+<!--START%SCRIPTS-->
+<!--END%SCRIPTS-->
