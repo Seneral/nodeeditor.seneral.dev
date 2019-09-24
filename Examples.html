@@ -5,22 +5,22 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="expires" content="21600"> <!-- 6 hours -->
 	<meta name="author" content="Seneral">
-	<meta name="keywords" content="Seneral, Unity, Developer">
+	<meta name="keywords" content="Node Editor, OpenSource, Canvas, Unity, Nodes, Graph, Runtime">
 
 	
 <title>Node Editor Framework - OpenSource Project</title>
-<meta name="description" content="OpenSource Node Editor Framework - create your own node-based editor!">
+<meta name="description" content="OpenSource Node Editor Framework for node-based displays and editors">
 <meta name="keywords" content="WebGL, Demo, Runtime, Example">
 
 <link rel="stylesheet" type="text/css" media="screen" href="css/WebGL.css">
 
 
 	
-	<link rel="icon" type="image/ico" href="../img/Icon/favicon.ico">
+	<link rel="icon" type="image/ico" href="img/Icon/favicon.ico">
 
-	<script async type="text/javascript" src="https://www.seneral.dev/js/modernizr-min.js"></script>
+	<script async type="text/javascript" src="js/modernizr.min.js"></script>
 
-	<link rel="stylesheet" type="text/css" media="screen" href="https://www.seneral.dev/css/style.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
 
 	<script type="text/javascript">
 		var gaProperty = 'UA-92606737-1';
@@ -39,12 +39,11 @@
 </head>
 <body>
 	<div class="bodyStyle">
-		
-<header class="header headerheight">
+		<header class="header headerheight">
 	
 		<div class="headerLogo" style="float:left;">
-			<a href="https://www.seneral.dev/index.html">
-				<img src="https://www.seneral.dev/img/Icon/FavIcon_tiny.png">
+			<a href="https://www.seneral.dev">
+				<img src="img/Icon/FavIcon_Seneral_tiny.png">
 			</a>
 		</div>
 
@@ -88,7 +87,6 @@
 <!-- Offset content so header doesn't overlap anything -->
 <div class="headerheight"> </div>
 
-
 		
 
 
@@ -100,8 +98,8 @@
     <big>Links</big>
     <br> <br>
     <ul class="panelLinks">
-        <li><a href="https://github.com/Seneral/Node_Editor_Framework">GitHub</a></li>
-        <li><a href="http://forum.unity3d.com/threads/simple-node-editor.189230/#post-2134738">Forum Thread</a></li>
+        <li><a href="https://github.com/Seneral/Node_Editor_Framework">Github</a></li>
+        <li><a href="https://forum.unity3d.com/threads/simple-node-editor.189230/#post-2134738">Forum Thread</a></li>
     </ul>
 </div>
 
@@ -125,6 +123,17 @@
 	&emsp; Hint: Load example canvases using <em>'File/Load Canvas From Scene'</em>!
 	<label for="boxToggle" content-toggled="&#9746;" class="WebGL_FSButton">&#9744;</label>
 </div>
+<br>
+<h4>Recreating the WebGL Demo</h4>
+<ol>
+	<li>Assign <code>RTNodeEditor</code> component to any GameObject - this is the example implementation of a runtime Node Editor </li>
+	<li>(Optional) Setup the position on the screen, e.g. to fullscreen </li>
+	<li>Load up the Node Editor Window and save some default canvases to the scene ('File/Save Canvas to Scene') </li>
+	<li>Build (or play) and the runtime editor appears. You can load your presaved examples from the scene. </li>
+</li><br>
+Note: Technically, the runtime editor also supports saving/loading from/to XML-files, but you'll need a seperate file browser to load them - this is especially a challenge on WebGL
+
+</ol>
 
 
 
@@ -152,9 +161,7 @@
 			<br> <br>
 		</footer>
 
-		<script type="text/javascript" src="https://www.seneral.dev/js/jquery-3.1.1.min.js"></script> <!-- https://code.jquery.com/jquery-3.1.1.min.js -->
-		<script type="text/javascript" src="https://www.seneral.dev/js/hisrc-min.js"></script>
-		<script type="text/javascript" src="https://www.seneral.dev/js/page.js"></script>
+		<script type="text/javascript" src="js/page-scripts.min.js"></script>
 
 		
 <script src="WebGLBuild/UnityLoader-mod.js"></script>
